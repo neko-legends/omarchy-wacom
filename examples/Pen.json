@@ -68,22 +68,99 @@
               }
             ],
             "Enable": true
-          }
-          ,{
+          },
+          {
             "Path": "OpenTabletDriver.Desktop.Binding.AdaptiveBinding",
-            "Settings": [{ "Property": "Binding", "Value": "Button 3" }],
+            "Settings": [
+              {
+                "Property": "Binding",
+                "Value": "Button 3"
+              }
+            ],
             "Enable": true
           }
         ],
         "AuxButtons": [
-          { "Path": "OpenTabletDriver.Desktop.Binding.KeyBinding", "Settings": [{ "Property": "Key", "Value": "LeftShift" }], "Enable": true },
-          { "Path": "OpenTabletDriver.Desktop.Binding.KeyBinding", "Settings": [{ "Property": "Key", "Value": "LeftControl" }], "Enable": true },
-          { "Path": "OpenTabletDriver.Desktop.Binding.KeyBinding", "Settings": [{ "Property": "Key", "Value": "LeftAlt" }], "Enable": true },
-          { "Path": "OpenTabletDriver.Desktop.Binding.KeyBinding", "Settings": [{ "Property": "Key", "Value": "Tab" }], "Enable": true },
-          { "Path": "OpenTabletDriver.Desktop.Binding.KeyBinding", "Settings": [{ "Property": "Key", "Value": "Space" }], "Enable": true },
-          { "Path": "OpenTabletDriver.Desktop.Binding.KeyBinding", "Settings": [{ "Property": "Key", "Value": "Escape" }], "Enable": true },
-          { "Path": "OpenTabletDriver.Desktop.Binding.KeyBinding", "Settings": [{ "Property": "Key", "Value": "E" }], "Enable": true },
-          { "Path": "OpenTabletDriver.Desktop.Binding.PresetBinding", "Settings": [{ "Property": "Preset", "Value": "Mouse" }], "Enable": true }
+          {
+            "Path": "OpenTabletDriver.Desktop.Binding.KeyBinding",
+            "Settings": [
+              {
+                "Property": "Key",
+                "Value": "LeftShift"
+              }
+            ],
+            "Enable": true
+          },
+          {
+            "Path": "OpenTabletDriver.Desktop.Binding.KeyBinding",
+            "Settings": [
+              {
+                "Property": "Key",
+                "Value": "LeftControl"
+              }
+            ],
+            "Enable": true
+          },
+          {
+            "Path": "OpenTabletDriver.Desktop.Binding.KeyBinding",
+            "Settings": [
+              {
+                "Property": "Key",
+                "Value": "LeftAlt"
+              }
+            ],
+            "Enable": true
+          },
+          {
+            "Path": "OpenTabletDriver.Desktop.Binding.KeyBinding",
+            "Settings": [
+              {
+                "Property": "Key",
+                "Value": "Tab"
+              }
+            ],
+            "Enable": true
+          },
+          {
+            "Path": "OpenTabletDriver.Desktop.Binding.KeyBinding",
+            "Settings": [
+              {
+                "Property": "Key",
+                "Value": "Space"
+              }
+            ],
+            "Enable": true
+          },
+          {
+            "Path": "OpenTabletDriver.Desktop.Binding.KeyBinding",
+            "Settings": [
+              {
+                "Property": "Key",
+                "Value": "Escape"
+              }
+            ],
+            "Enable": true
+          },
+          {
+            "Path": "OpenTabletDriver.Desktop.Binding.KeyBinding",
+            "Settings": [
+              {
+                "Property": "Key",
+                "Value": "E"
+              }
+            ],
+            "Enable": true
+          },
+          {
+            "Path": "LocalWacom.RememberMouseBinding",
+            "Settings": [
+              {
+                "Property": "PenPreset",
+                "Value": "Pen"
+              }
+            ],
+            "Enable": true
+          }
         ],
         "MouseButtons": [],
         "MouseScrollUp": null,
@@ -93,9 +170,27 @@
             "WheelButtons": [
               null
             ],
-            "ClockwiseRotation": { "Path": "OpenTabletDriver.Desktop.Binding.KeyBinding", "Settings": [{ "Property": "Key", "Value": "Down" }], "Enable": true },
+            "ClockwiseRotation": {
+              "Path": "OpenTabletDriver.Desktop.Binding.KeyBinding",
+              "Settings": [
+                {
+                  "Property": "Key",
+                  "Value": "Down"
+                }
+              ],
+              "Enable": true
+            },
             "ClockwiseActivationThreshold": 5.0,
-            "CounterClockwiseRotation": { "Path": "OpenTabletDriver.Desktop.Binding.KeyBinding", "Settings": [{ "Property": "Key", "Value": "Up" }], "Enable": true },
+            "CounterClockwiseRotation": {
+              "Path": "OpenTabletDriver.Desktop.Binding.KeyBinding",
+              "Settings": [
+                {
+                  "Property": "Key",
+                  "Value": "Up"
+                }
+              ],
+              "Enable": true
+            },
             "CounterClockwiseActivationThreshold": 5.0,
             "StepSize": 5.0
           }

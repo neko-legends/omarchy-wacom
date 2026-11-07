@@ -100,12 +100,22 @@
         "PenButtons": [
           {
             "Path": "OpenTabletDriver.Desktop.Binding.MouseBinding",
-            "Settings": [{ "Property": "Button", "Value": "Middle" }],
+            "Settings": [
+              {
+                "Property": "Button",
+                "Value": "Middle"
+              }
+            ],
             "Enable": true
           },
           {
             "Path": "OpenTabletDriver.Desktop.Binding.MouseBinding",
-            "Settings": [{ "Property": "Button", "Value": "Backward" }],
+            "Settings": [
+              {
+                "Property": "Button",
+                "Value": "Backward"
+              }
+            ],
             "Enable": true
           },
           {
@@ -191,10 +201,10 @@
             "Enable": true
           },
           {
-            "Path": "OpenTabletDriver.Desktop.Binding.PresetBinding",
+            "Path": "LocalWacom.RememberMouseBinding",
             "Settings": [
               {
-                "Property": "Preset",
+                "Property": "PenPreset",
                 "Value": "Pen"
               }
             ],

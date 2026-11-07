@@ -1,7 +1,9 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Globalization;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using OpenTabletDriver.Desktop;
 
 namespace OpenTabletDriver.UX.Controls.Bindings
@@ -50,12 +52,52 @@ namespace OpenTabletDriver.UX.Controls.Bindings
             Names = updated;
         }
         public void Save(int slot, Settings settings) => AtomicSettings(SlotPath(slot), settings);
-        public bool MatchesAny(Settings settings)
+        public int? SelectedSlot
         {
-            var current = JsonConvert.SerializeObject(settings);
-            for (int i = 0; i < 3; i++)
-                if (Exists(i) && JsonConvert.SerializeObject(Load(i)) == current) return true;
-            return false;
+            get
+            {
+                var file = Path.Combine(directory, "selected-slot.json");
+                return File.Exists(file) && int.TryParse(File.ReadAllText(file), out int slot) && slot >= 0 && slot < 3 ? slot : null;
+            }
+        }
+        public void Select(int slot)
+        {
+            SlotPath(slot);
+            if (SelectedSlot != slot) AtomicText(Path.Combine(directory, "selected-slot.json"), slot.ToString(CultureInfo.InvariantCulture));
+        }
+        public int? FindMatchingSlot(Settings settings)
+        {
+            var current = Fingerprint(settings);
+            var order = Enumerable.Range(0, 3).OrderBy(i => i == SelectedSlot ? 0 : 1);
+            foreach (int i in order)
+                if (Exists(i) && Fingerprint(Load(i)) == current) return i;
+            return null;
+        }
+        public bool MatchesAny(Settings settings) => FindMatchingSlot(settings) != null;
+
+        // Editor controls can reorder plugin properties or serialize 50 as 50.0.
+        // Neither is a user change. Button/filter ordering, however, is significant.
+        public static string Fingerprint(Settings settings)
+        {
+            var value = JObject.FromObject(settings);
+            value.Remove("Revision");
+            return Normalize(value).ToString(Formatting.None);
+        }
+        private static JToken Normalize(JToken value)
+        {
+            if (value is JObject obj)
+                return new JObject(obj.Properties().OrderBy(p => p.Name, StringComparer.Ordinal)
+                    .Select(p => new JProperty(p.Name, Normalize(p.Value))));
+            if (value is JArray array)
+            {
+                var values = array.AsEnumerable();
+                if (array.Count > 0 && array.All(v => v is JObject && v["Property"]?.Type == JTokenType.String))
+                    values = values.OrderBy(v => (string?)v["Property"], StringComparer.Ordinal);
+                return new JArray(values.Select(Normalize));
+            }
+            if (value.Type is JTokenType.Integer or JTokenType.Float)
+                return new JValue(Convert.ToDecimal(((JValue)value).Value, CultureInfo.InvariantCulture));
+            return value.DeepClone();
         }
         public static void AtomicSettings(string path, Settings settings)
         {

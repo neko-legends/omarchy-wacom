@@ -225,10 +225,10 @@
             "Enable": true
           },
           {
-            "Path": "OpenTabletDriver.Desktop.Binding.PresetBinding",
+            "Path": "LocalWacom.RememberMouseBinding",
             "Settings": [
               {
-                "Property": "Preset",
+                "Property": "PenPreset",
                 "Value": "Pen"
               }
             ],

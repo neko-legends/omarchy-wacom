@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Eto.Forms;
 using OpenTabletDriver.Desktop;
@@ -10,7 +11,9 @@ namespace OpenTabletDriver.UX.Controls.Bindings
     public sealed class QuickPresetPanel : Group
     {
         private readonly QuickPresetStore store;
-        private readonly Label status = new Label { Text = "Load a setup, or Save current settings into a slot.", Wrap = WrapMode.Word };
+        private readonly Label status = new Label { Text = "Save on a row keeps your changes in that setup.", Wrap = WrapMode.Word };
+        private readonly Label currentSetup = new Label { Text = "Checking current setup…", Wrap = WrapMode.Word };
+        private readonly UITimer statusTimer = new UITimer { Interval = 0.5 };
 
         public QuickPresetPanel()
         {
@@ -25,7 +28,7 @@ namespace OpenTabletDriver.UX.Controls.Bindings
                 var save = new Button { Text = "Save" };
                 name.LostFocus += (s, e) =>
                 {
-                    try { store.Rename(slot, name.Text); }
+                    try { store.Rename(slot, name.Text); RefreshStatus(); }
                     catch (Exception ex) { name.Text = store.Names[slot]; ShowError(ex); }
                 };
                 load.Click += async (s, e) => await Run(async () =>
@@ -36,6 +39,8 @@ namespace OpenTabletDriver.UX.Controls.Bindings
                     var settings = store.Load(slot);
                     await App.Driver.Instance!.SetSettings(settings);
                     App.Current.Settings = settings;
+                    store.Select(slot);
+                    RefreshStatus();
                     var info = await App.Driver.Instance.GetApplicationInfo();
                     QuickPresetStore.AtomicSettings(info.SettingsFile, settings);
                     status.Text = $"Loaded {store.Names[slot]} — also saved for next login.";
@@ -46,6 +51,8 @@ namespace OpenTabletDriver.UX.Controls.Bindings
                     // Capture the GUI model, not stale daemon settings: unsaved
                     // edits in the controls are part of the requested preset.
                     store.Save(slot, App.Current.Settings);
+                    store.Select(slot);
+                    RefreshStatus();
                     load.Enabled = true;
                     await App.Driver.Instance!.SetSettings(App.Current.Settings);
                     var info = await App.Driver.Instance.GetApplicationInfo();
@@ -54,7 +61,40 @@ namespace OpenTabletDriver.UX.Controls.Bindings
                 });
                 rows.Rows.Add(new TableRow(new Label { Text = $"{i + 1}" }, load, save, new TableCell(name, true)));
             }
-            Content = new StackLayout { HorizontalContentAlignment = HorizontalAlignment.Stretch, Spacing = 6, Items = { rows, status } };
+            Content = new StackLayout { HorizontalContentAlignment = HorizontalAlignment.Stretch, Spacing = 6, Items = { currentSetup, rows, status } };
+            statusTimer.Elapsed += (_, _) => RefreshStatus();
+            statusTimer.Start();
+            RefreshStatus();
+        }
+        private void RefreshStatus()
+        {
+            if (!App.Driver.IsConnected) { ShowCurrent("Driver disconnected"); return; }
+            try
+            {
+                var settings = App.Current.Settings;
+                var match = store.FindMatchingSlot(settings);
+                if (match is int slot)
+                {
+                    store.Select(slot);
+                    ShowCurrent($"Current setup: {store.Names[slot]} — Saved");
+                }
+                else if (settings.Profiles.Any() && settings.Profiles.All(p => p.OutputMode.Path != "OpenTabletDriver.Desktop.Output.RelativeMode"))
+                    ShowCurrent("Pen mode — not saved in these mouse setups");
+                else
+                    ShowCurrent(store.SelectedSlot is int selected
+                        ? $"Setup: {store.Names[selected]} (changed) — Changes not saved"
+                        : "Custom setup — Changes not saved to a setup");
+            }
+            catch (Exception error) { ShowCurrent("Could not check saved settings: " + error.Message); }
+        }
+        private void ShowCurrent(string text)
+        {
+            if (currentSetup.Text != text) currentSetup.Text = text;
+        }
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) { statusTimer.Stop(); statusTimer.Dispose(); }
+            base.Dispose(disposing);
         }
         private async Task Run(Func<Task> action)
         {

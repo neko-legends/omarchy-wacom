@@ -1,4 +1,5 @@
 using OpenTabletDriver.Desktop;
+using Newtonsoft.Json;
 using OpenTabletDriver.UX.Controls.Bindings;
 var root=Path.Combine(Path.GetTempPath(),"wacom-preset-tests-"+Guid.NewGuid().ToString("N"));
 Directory.CreateDirectory(root);
@@ -20,5 +21,15 @@ try {
  bool invalid=false; try { reopened.Rename(0," "); } catch(ArgumentException) { invalid=true; }
  Check(invalid,"Empty name rejected");
  Check(!Directory.EnumerateFiles(slots).Any(x=>x.Contains(".tmp-")),"Atomic writes clean up");
- Console.WriteLine($"PASS: {checks} preset persistence checks.");
+ var a = JsonConvert.DeserializeObject<Settings>("""{"Tools":[{"Path":"Test","Settings":[{"Property":"A","Value":50},{"Property":"B","Value":2}],"Enable":true}]}""")!;
+ var b = JsonConvert.DeserializeObject<Settings>("""{"Tools":[{"Enable":true,"Settings":[{"Value":2.0,"Property":"B"},{"Value":50.0,"Property":"A"}],"Path":"Test"}]}""")!;
+ Check(QuickPresetStore.Fingerprint(a)==QuickPresetStore.Fingerprint(b),"Property order and numeric representation are not edits");
+ reopened.Save(2,a); reopened.Select(2);
+ Check(reopened.FindMatchingSlot(b)==2,"Active setup recognized after property reordering");
+ b.Tools[0]!["A"].SetValue(51);
+ Check(!reopened.MatchesAny(b),"Changed tuning is marked unsaved");
+ reopened.Save(2,b);
+ Check(reopened.FindMatchingSlot(b)==2,"Save clears unsaved state");
+ Check(new QuickPresetStore(slots,presets).SelectedSlot==2,"Selected setup persists across restarts");
+ Console.WriteLine($"PASS: {checks} preset persistence/status checks.");
 } finally { Directory.Delete(root,true); }

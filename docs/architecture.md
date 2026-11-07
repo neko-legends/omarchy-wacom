@@ -52,6 +52,24 @@ These filters are **relative-mode only**. Absolute/Artist mode is not supported
 by them. Applications/compositors can invert wheel directions or ignore
 horizontal scrolling; both direction inversion options are exposed.
 
+### RememberMouse
+
+The mode-toggle binding reads the current driver settings before leaving relative
+mode and saves an independent copy under `RememberedMouse/`. It validates the
+named Pen destination first, so a missing or invalid Pen preset cannot overwrite
+good remembered settings. On return it restores that copy; only when no history
+exists does it use quick slot 3. Corrupt history is reported rather than silently
+replaced. Filenames are derived from a hash of the tablet name. Writes are atomic
+and keep a backup. A shared gate and cooldown prevent a held button from toggling
+back immediately after settings recreate its binding. Errors are caught and
+reported in the driver log. The accepted setup is saved for startup and the GUI
+is resynchronized after each successful switch.
+
+The installer migrates only legacy preset links whose target is exactly Pen or
+Mouse, in startup settings, saved slots, and named presets. Every changed file
+has a `.before-remember-toggle` backup. Tuning and unrelated preset buttons are
+unchanged, and rerunning the migration makes no further changes.
+
 ## GUI
 
 The customized GTK frontend uses the existing 0.6.8 daemon RPC interface. It adds:
@@ -70,6 +88,15 @@ cannot be used for path traversal. Settings writes use a sibling temporary file
 and rename, keeping `.bak` on overwrite. Slots snapshot the **GUI model**, so
 unsaved editor changes are included. Load applies the snapshot, refreshes the
 UI, and saves startup settings. The old named File-menu presets are independent.
+
+A live current-setup label compares the GUI model against the saved slots every
+half second. It recognizes edits even inside nested binding/filter properties.
+Comparison ignores JSON property order, plugin-property ordering, numeric
+formatting (50 versus 50.0), and the revision field, but preserves button/filter
+ordering. The selected slot is remembered separately, so duplicate slots retain
+the user's chosen name. Save clears the warning; changing only startup settings
+does not pretend those edits have been saved into a slot. Pen mode is identified
+separately from the mouse slots. The UI timer is disposed with the panel.
 
 ## Installation paths
 

@@ -17,6 +17,12 @@ couldn't get from the stock settings app:
   Gaming, and Dynamic Scroll. Each one is a row in Pen Settings with Load and
   Save buttons. Change something, hit Save, and the old version is backed up
   automatically. Your choices survive logout and reboot.
+- **See which setup you're using and whether it's saved.** The settings window
+  shows the setup's name and warns "Changes not saved" when you adjust it.
+  Save on that setup's row to keep your changes.
+- **Switch to pen mode and back without losing your mouse setup.** The mode
+  button remembers your current mouse controls and scrolling settings, then
+  brings them back when you return. It no longer loads an older Mouse setup.
 - **Hold one pen button to scroll in any direction.** Hold the button, and
   wherever your pen is pointing becomes the "centre". Push up to scroll up,
   down to scroll down, sideways for sideways. The further you push, the faster
@@ -76,7 +82,13 @@ buttons are decoded. Without the flag, no pen-specific override is installed.
 Click **Load** on a row to use it. If you've made unsaved changes, it asks
 first so you don't lose them. These presets are stored in
 `~/.config/OpenTabletDriver/QuickPresets/` and are separate from the File
-menu's named presets — old bindings to named presets keep working.
+menu's named presets. "Saved" in the new label means saved to one of these
+three rows, not just saved for startup.
+
+The installer updates the old Pen/Mouse switching buttons to remember your
+setup. Other buttons that load named presets are left alone. If you haven't
+used a mouse setup yet, switching back from pen mode uses Dynamic Scroll.
+Apply or save changes before switching modes so the driver can remember them.
 
 ### Tuning the scroll feel
 
