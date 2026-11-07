@@ -69,6 +69,7 @@ Categories=Settings;
 StartupNotify=false
 StartupWMClass=OpenTabletDriver.UX.Gtk
 DESKTOP
+python3 "$root/scripts/preset_setup.py" "$config"
 systemctl --user enable --now opentabletdriver
 trap - EXIT
-printf '\nInstalled. Run wacom. Existing settings and preset slots were preserved.\nBackup: %s\n' "$backup"
+printf '\nInstalled. Run wacom.\nBackup: %s\n' "$backup"

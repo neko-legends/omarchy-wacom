@@ -8,6 +8,7 @@ for project in Tests PenTests DynamicScrollTests PresetTests DebuggerTests; do
   dotnet run --project "$project" -c Release
 done
 bash -n scripts/bootstrap scripts/build scripts/test scripts/install
+python3 scripts/test_preset_setup.py
 python3 - <<'PY'
 import json
 from pathlib import Path

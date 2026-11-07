@@ -7,3 +7,5 @@
 *.log
 *.zip
 *.tar.gz
+__pycache__/
+*.pyc

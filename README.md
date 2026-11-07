@@ -36,7 +36,7 @@ Linux device permissions are required.
 |---|---|---|---|
 | Desktop | Vertical scroll | Opposite vertical scroll | Right-click |
 | Gaming | Middle-click | Mouse 4 / Backward | Right-click |
-| Dynamic Scroll | Middle-click | Hold for four-way scrolling | Right-click |
+| **Dynamic Scroll (fresh-install default)** | Middle-click | Hold for four-way scrolling | Right-click |
 
 Click **Load** on a row to use that setup. Make changes, then click that row's
 **Save** to overwrite it; the previous version is backed up. Rename by editing
@@ -54,9 +54,9 @@ In **Dynamic Scroll**, hold **Pen Binding 2**:
 2. Move away from neutral to scroll in that direction; farther means faster.
 3. Return to neutral to stop, or release to resume normal cursor motion.
 
-The user-tuned defaults are base amount **100**, base interval **100 ms**,
-dead zone **5 cursor pixels**, base-speed distance **10 cursor pixels past
-neutral's dead zone**, and maximum speed **1x**. Both direction inversions are
+The refined defaults are base amount **50**, base interval **100 ms**,
+dead zone **10 cursor pixels**, base-speed distance **100 cursor pixels past
+neutral's dead zone**, and maximum speed **5x**. Both direction inversions are
 off. Edit the binding to adjust these. Desktop's fixed-scroll bindings remain
 at **50 / 100 ms**, and mouse sensitivity is **15 px/mm** on both axes.
 Speed varies by scroll amount per elapsed time, rather than spawning faster
@@ -109,9 +109,11 @@ Install is per-user, with **no sudo**. It backs up existing configuration and
 UI, preserves current presets, briefly stops/restarts the user daemon, installs
 plugins and the custom UI, and adds `wacom` plus an application-launcher entry.
 The system OpenTabletDriver package/daemon executable is not replaced. Existing
-startup settings are not replaced with the examples; select a slot to try one.
-The first launch seeds missing slots from named presets without overwriting
-existing slots.
+preset slots and active startup settings are preserved on upgrades.
+On a **fresh customization install** (no existing quick-preset slots or install
+marker), the installer seeds all three slots and activates **Dynamic Scroll,
+preset 3**, including for the next login. Any pre-customization startup settings
+are backed up. Missing slots are filled without overwriting existing slots.
 
 Review/rebuild this customization after updating the system driver beyond the
 0.6.8 API. Builds are pinned, not automatically rebased onto newer upstream code.

@@ -27,11 +27,11 @@ internal sealed class ScrollSession
 public sealed class DynamicScrollBinding : IStateBinding
 {
     [Resolved] public IMouseScrollHandler? Pointer { get; set; }
-    [Property("Base Amount"), DefaultPropertyValue(100)] public int Amount { get; set; } = 100;
+    [Property("Base Amount"), DefaultPropertyValue(50)] public int Amount { get; set; } = 50;
     [Property("Base Interval (ms)"), DefaultPropertyValue(100)] public int Interval { get; set; } = 100;
-    [Property("Dead Zone (cursor pixels)"), DefaultPropertyValue(5)] public float DeadZone { get; set; } = 5;
-    [Property("Base Speed Distance (cursor pixels)"), DefaultPropertyValue(10)] public float Distance { get; set; } = 10;
-    [Property("Maximum Speed Multiplier"), DefaultPropertyValue(1)] public float MaximumSpeed { get; set; } = 1;
+    [Property("Dead Zone (cursor pixels)"), DefaultPropertyValue(10)] public float DeadZone { get; set; } = 10;
+    [Property("Base Speed Distance (cursor pixels)"), DefaultPropertyValue(100)] public float Distance { get; set; } = 100;
+    [Property("Maximum Speed Multiplier"), DefaultPropertyValue(5)] public float MaximumSpeed { get; set; } = 5;
     [BooleanProperty("Invert Horizontal", "")] public bool InvertX { get; set; }
     [BooleanProperty("Invert Vertical", "")] public bool InvertY { get; set; }
 

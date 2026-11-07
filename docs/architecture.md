@@ -86,6 +86,13 @@ variables. It does not replace packaged files or unload kernel modules. User
 service startup is enabled. Fresh hardware/udev setup remains an upstream
 OpenTabletDriver installation task.
 
+A fresh customization installation seeds all three quick-preset slots and copies
+slot 3 (Dynamic Scroll) to startup settings before starting the daemon. The old
+startup settings are backed up. Any existing slot or `.initialized` marker makes
+this an upgrade: active settings and saved slots are preserved, and only missing
+slots are seeded. Tests cover fresh setup, upgrades, old unmarked installations,
+and invalid preset input.
+
 ## Rollback
 
 For a quick return to normal scrolling, load Desktop in the GUI. For the stock
