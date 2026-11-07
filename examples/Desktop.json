@@ -1,0 +1,305 @@
+{
+  "Revision": "0.6.8",
+  "Profiles": [
+    {
+      "Tablet": "Wacom PTH-660",
+      "OutputMode": {
+        "Path": "OpenTabletDriver.Desktop.Output.RelativeMode",
+        "Settings": [],
+        "Enable": true
+      },
+      "Filters": [
+        {
+          "Path": "Hover_Distance_Limiter.Hover_Distance_Limiter",
+          "Settings": [
+            {
+              "Property": "Hover_min",
+              "Value": 0
+            },
+            {
+              "Property": "Hover_max",
+              "Value": 30
+            },
+            {
+              "Property": "NearProximity",
+              "Value": true
+            },
+            {
+              "Property": "Pressure_min",
+              "Value": 0
+            },
+            {
+              "Property": "Pressure_max",
+              "Value": 16384
+            },
+            {
+              "Property": "Pen",
+              "Value": false
+            },
+            {
+              "Property": "Eraser",
+              "Value": false
+            }
+          ],
+          "Enable": false
+        },
+        {
+          "Path": "LocalWacom.RelativeHover",
+          "Settings": [
+            {
+              "Property": "NearProximity",
+              "Value": true
+            },
+            {
+              "Property": "MaximumDistance",
+              "Value": 100
+            }
+          ],
+          "Enable": true
+        }
+      ],
+      "AbsoluteModeSettings": {
+        "Display": {
+          "Width": 3840.0,
+          "Height": 2160.0,
+          "X": 3360.0,
+          "Y": 1080.0,
+          "Rotation": 0.0
+        },
+        "Tablet": {
+          "Width": 224.0,
+          "Height": 148.0,
+          "X": 112.0,
+          "Y": 74.0,
+          "Rotation": 0.0
+        },
+        "EnableClipping": true,
+        "EnableAreaLimiting": false,
+        "LockAspectRatio": false
+      },
+      "RelativeModeSettings": {
+        "XSensitivity": 15.0,
+        "YSensitivity": 15.0,
+        "RelativeRotation": 0.0,
+        "RelativeResetDelay": "00:00:00.1000000"
+      },
+      "Bindings": {
+        "TipActivationThreshold": 1.0,
+        "TipButton": {
+          "Path": "OpenTabletDriver.Desktop.Binding.MouseBinding",
+          "Settings": [
+            {
+              "Property": "Button",
+              "Value": "Left"
+            }
+          ],
+          "Enable": true
+        },
+        "EraserActivationThreshold": 1.0,
+        "EraserButton": null,
+        "PenButtons": [
+          {
+            "Path": "OpenTabletDriver.Desktop.Binding.MouseScrollBinding",
+            "Settings": [
+              {
+                "Property": "Direction",
+                "Value": "Vertical"
+              },
+              {
+                "Property": "Amount",
+                "Value": 50
+              },
+              {
+                "Property": "Interval",
+                "Value": 100
+              },
+              {
+                "Property": "Invert",
+                "Value": true
+              }
+            ],
+            "Enable": true
+          },
+          {
+            "Path": "OpenTabletDriver.Desktop.Binding.MouseScrollBinding",
+            "Settings": [
+              {
+                "Property": "Direction",
+                "Value": "Vertical"
+              },
+              {
+                "Property": "Invert",
+                "Value": false
+              },
+              {
+                "Property": "Amount",
+                "Value": 50
+              },
+              {
+                "Property": "Interval",
+                "Value": 100
+              }
+            ],
+            "Enable": true
+          },
+          {
+            "Path": "OpenTabletDriver.Desktop.Binding.MouseBinding",
+            "Settings": [
+              {
+                "Property": "Button",
+                "Value": "Right"
+              }
+            ],
+            "Enable": true
+          }
+        ],
+        "AuxButtons": [
+          {
+            "Path": "OpenTabletDriver.Desktop.Binding.KeyBinding",
+            "Settings": [
+              {
+                "Property": "Key",
+                "Value": "LeftShift"
+              }
+            ],
+            "Enable": true
+          },
+          {
+            "Path": "OpenTabletDriver.Desktop.Binding.KeyBinding",
+            "Settings": [
+              {
+                "Property": "Key",
+                "Value": "LeftControl"
+              }
+            ],
+            "Enable": true
+          },
+          {
+            "Path": "OpenTabletDriver.Desktop.Binding.KeyBinding",
+            "Settings": [
+              {
+                "Property": "Key",
+                "Value": "LeftAlt"
+              }
+            ],
+            "Enable": true
+          },
+          {
+            "Path": "OpenTabletDriver.Desktop.Binding.KeyBinding",
+            "Settings": [
+              {
+                "Property": "Key",
+                "Value": "Tab"
+              }
+            ],
+            "Enable": true
+          },
+          {
+            "Path": "OpenTabletDriver.Desktop.Binding.KeyBinding",
+            "Settings": [
+              {
+                "Property": "Key",
+                "Value": "Space"
+              }
+            ],
+            "Enable": true
+          },
+          {
+            "Path": "OpenTabletDriver.Desktop.Binding.KeyBinding",
+            "Settings": [
+              {
+                "Property": "Key",
+                "Value": "Escape"
+              }
+            ],
+            "Enable": true
+          },
+          {
+            "Path": "OpenTabletDriver.Desktop.Binding.KeyBinding",
+            "Settings": [
+              {
+                "Property": "Key",
+                "Value": "E"
+              }
+            ],
+            "Enable": true
+          },
+          {
+            "Path": "OpenTabletDriver.Desktop.Binding.PresetBinding",
+            "Settings": [
+              {
+                "Property": "Preset",
+                "Value": "Pen"
+              }
+            ],
+            "Enable": true
+          }
+        ],
+        "MouseButtons": [],
+        "MouseScrollUp": null,
+        "MouseScrollDown": null,
+        "WheelBindings": [
+          {
+            "WheelButtons": [
+              null
+            ],
+            "ClockwiseRotation": {
+              "Path": "OpenTabletDriver.Desktop.Binding.MouseScrollBinding",
+              "Settings": [
+                {
+                  "Property": "Direction",
+                  "Value": "Vertical"
+                },
+                {
+                  "Property": "Invert",
+                  "Value": false
+                },
+                {
+                  "Property": "Interval",
+                  "Value": 300
+                },
+                {
+                  "Property": "Amount",
+                  "Value": -50
+                }
+              ],
+              "Enable": true
+            },
+            "ClockwiseActivationThreshold": 5.0,
+            "CounterClockwiseRotation": {
+              "Path": "OpenTabletDriver.Desktop.Binding.MouseScrollBinding",
+              "Settings": [
+                {
+                  "Property": "Direction",
+                  "Value": "Vertical"
+                },
+                {
+                  "Property": "Invert",
+                  "Value": false
+                },
+                {
+                  "Property": "Interval",
+                  "Value": 300
+                },
+                {
+                  "Property": "Amount",
+                  "Value": 50
+                }
+              ],
+              "Enable": true
+            },
+            "CounterClockwiseActivationThreshold": 5.0,
+            "StepSize": 5.0
+          }
+        ],
+        "DisablePressure": false,
+        "DisableTilt": false,
+        "DisableRotation": false,
+        "EnableDragBindings": false
+      }
+    }
+  ],
+  "LockUsableAreaDisplay": true,
+  "LockUsableAreaTablet": true,
+  "Tools": []
+}

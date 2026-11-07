@@ -1,0 +1,9 @@
+/OpenTabletDriver-0.6.8/
+/.cache/
+/out/
+**/bin/
+**/obj/
+*.user
+*.log
+*.zip
+*.tar.gz

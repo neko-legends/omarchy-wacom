@@ -1,0 +1,113 @@
+{
+  "Revision": "0.6.8",
+  "Profiles": [
+    {
+      "Tablet": "Wacom PTH-660",
+      "OutputMode": {
+        "Path": "OpenTabletDriver.Desktop.Output.LinuxArtistMode",
+        "Settings": [],
+        "Enable": true
+      },
+      "Filters": [],
+      "AbsoluteModeSettings": {
+        "Display": {
+          "Width": 3840.0,
+          "Height": 2160.0,
+          "X": 3360.0,
+          "Y": 1080.0,
+          "Rotation": 0.0
+        },
+        "Tablet": {
+          "Width": 224.0,
+          "Height": 148.0,
+          "X": 112.0,
+          "Y": 74.0,
+          "Rotation": 0.0
+        },
+        "EnableClipping": true,
+        "EnableAreaLimiting": false,
+        "LockAspectRatio": false
+      },
+      "RelativeModeSettings": {
+        "XSensitivity": 10.0,
+        "YSensitivity": 10.0,
+        "RelativeRotation": 0.0,
+        "RelativeResetDelay": "00:00:00.1000000"
+      },
+      "Bindings": {
+        "TipActivationThreshold": 1.0,
+        "TipButton": {
+          "Path": "OpenTabletDriver.Desktop.Binding.AdaptiveBinding",
+          "Settings": [
+            {
+              "Property": "Binding",
+              "Value": "Tip"
+            }
+          ],
+          "Enable": true
+        },
+        "EraserActivationThreshold": 1.0,
+        "EraserButton": null,
+        "PenButtons": [
+          {
+            "Path": "OpenTabletDriver.Desktop.Binding.AdaptiveBinding",
+            "Settings": [
+              {
+                "Property": "Binding",
+                "Value": "Button 1"
+              }
+            ],
+            "Enable": true
+          },
+          {
+            "Path": "OpenTabletDriver.Desktop.Binding.AdaptiveBinding",
+            "Settings": [
+              {
+                "Property": "Binding",
+                "Value": "Button 2"
+              }
+            ],
+            "Enable": true
+          }
+          ,{
+            "Path": "OpenTabletDriver.Desktop.Binding.AdaptiveBinding",
+            "Settings": [{ "Property": "Binding", "Value": "Button 3" }],
+            "Enable": true
+          }
+        ],
+        "AuxButtons": [
+          { "Path": "OpenTabletDriver.Desktop.Binding.KeyBinding", "Settings": [{ "Property": "Key", "Value": "LeftShift" }], "Enable": true },
+          { "Path": "OpenTabletDriver.Desktop.Binding.KeyBinding", "Settings": [{ "Property": "Key", "Value": "LeftControl" }], "Enable": true },
+          { "Path": "OpenTabletDriver.Desktop.Binding.KeyBinding", "Settings": [{ "Property": "Key", "Value": "LeftAlt" }], "Enable": true },
+          { "Path": "OpenTabletDriver.Desktop.Binding.KeyBinding", "Settings": [{ "Property": "Key", "Value": "Tab" }], "Enable": true },
+          { "Path": "OpenTabletDriver.Desktop.Binding.KeyBinding", "Settings": [{ "Property": "Key", "Value": "Space" }], "Enable": true },
+          { "Path": "OpenTabletDriver.Desktop.Binding.KeyBinding", "Settings": [{ "Property": "Key", "Value": "Escape" }], "Enable": true },
+          { "Path": "OpenTabletDriver.Desktop.Binding.KeyBinding", "Settings": [{ "Property": "Key", "Value": "E" }], "Enable": true },
+          { "Path": "OpenTabletDriver.Desktop.Binding.PresetBinding", "Settings": [{ "Property": "Preset", "Value": "Mouse" }], "Enable": true }
+        ],
+        "MouseButtons": [],
+        "MouseScrollUp": null,
+        "MouseScrollDown": null,
+        "WheelBindings": [
+          {
+            "WheelButtons": [
+              null
+            ],
+            "ClockwiseRotation": { "Path": "OpenTabletDriver.Desktop.Binding.KeyBinding", "Settings": [{ "Property": "Key", "Value": "Down" }], "Enable": true },
+            "ClockwiseActivationThreshold": 5.0,
+            "CounterClockwiseRotation": { "Path": "OpenTabletDriver.Desktop.Binding.KeyBinding", "Settings": [{ "Property": "Key", "Value": "Up" }], "Enable": true },
+            "CounterClockwiseActivationThreshold": 5.0,
+            "StepSize": 5.0
+          }
+        ],
+        "DisablePressure": false,
+        "DisableTilt": false,
+        "DisableRotation": false,
+        "EnableDragBindings": false
+      }
+    }
+  ],
+  "LockUsableAreaDisplay": true,
+  "LockUsableAreaTablet": true,
+  "Tools": []
+}

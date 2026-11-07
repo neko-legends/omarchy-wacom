@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -euo pipefail
+root=$(cd -- "$(dirname -- "$0")/.." && pwd)
+cd "$root"
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
+scripts/bootstrap
+for project in RelativeHover ProPen3D DynamicScroll; do
+  dotnet build "$project" -c Release --nologo
+done
+dotnet publish OpenTabletDriver-0.6.8/OpenTabletDriver.UX.Gtk -c Release \
+  -r linux-x64 --self-contained false -o "$root/out/ui"
+python3 - <<'PY'
+from pathlib import Path
+from zipfile import ZipFile
+out = Path('out/plugins'); out.mkdir(parents=True, exist_ok=True)
+for project, package in [('RelativeHover','relative-hover-fix'), ('ProPen3D','propen3d'), ('DynamicScroll','dynamic-scroll')]:
+    dll = Path(project)/'bin/Release/net10.0'/f'{project}.dll'
+    with ZipFile(out/f'{package}.zip', 'w') as archive:
+        archive.write(dll, dll.name)
+PY
+printf '\nBuild complete: %s/out\n' "$root"

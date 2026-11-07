@@ -1,0 +1,17 @@
+omarchy-wacom
+
+This project customizes OpenTabletDriver v0.6.8:
+https://github.com/OpenTabletDriver/OpenTabletDriver
+Copyright OpenTabletDriver contributors; LGPL-3.0-or-later.
+
+Files under upstream-overlay/ that replace existing upstream files are modified
+copies of those files. New plugins, tests, GUI helpers, and scripts in this
+repository are also provided under LGPL-3.0-or-later. Dependencies downloaded by
+the build retain their own licenses. The upstream source archive is not vendored.
+
+Pinned source:
+https://github.com/OpenTabletDriver/OpenTabletDriver/archive/refs/tags/v0.6.8.tar.gz
+SHA-256: b2ecfdb5dd1bcdc980d478e2fc629cb8d746c77d137e5b032afc0ab7bbe1b62f
+
+AI assistance was used in developing the local changes, tests, and documentation.
+This is not an official Wacom or OpenTabletDriver product.

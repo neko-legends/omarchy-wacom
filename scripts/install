@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+# Per-user installation only. Install/configure the system OpenTabletDriver package first.
+set -euo pipefail
+root=$(cd -- "$(dirname -- "$0")/.." && pwd)
+propen=false
+case "${1:-}" in
+  --pro-pen-3d) propen=true ;;
+  '') ;;
+  *) echo 'Usage: scripts/install [--pro-pen-3d]' >&2; exit 2 ;;
+esac
+command -v otd >/dev/null || { echo 'Install OpenTabletDriver first.' >&2; exit 1; }
+[[ -x "$root/out/ui/OpenTabletDriver.UX.Gtk" ]] || { echo 'Run scripts/build first.' >&2; exit 1; }
+if pgrep -u "$(id -u)" -f '(^|/)OpenTabletDriver.UX.Gtk( |$)' >/dev/null; then
+  echo 'Close the OpenTabletDriver settings GUI before installing. The daemon may stay running.' >&2
+  exit 1
+fi
+config="${XDG_CONFIG_HOME:-$HOME/.config}/OpenTabletDriver"
+data="${XDG_DATA_HOME:-$HOME/.local/share}"
+backup="${XDG_STATE_HOME:-$HOME/.local/state}/wacom/backups/install-$(date +%Y%m%d-%H%M%S)-$$"
+mkdir -p "$backup" "$config/Plugins" "$config/Presets" "$data/applications" "$HOME/.local/bin"
+if [[ -d "$config" ]]; then cp -a "$config" "$backup/config"; fi
+for file in "$HOME/.local/bin/wacom" "$data/applications/opentabletdriver.desktop"; do
+  if [[ -f "$file" ]]; then cp -a "$file" "$backup/$(basename "$file")"; fi
+done
+was_active=false
+if systemctl --user is-active --quiet opentabletdriver; then
+  was_active=true
+  otd save "$backup/active-settings.json"
+  systemctl --user stop opentabletdriver
+fi
+trap 'if $was_active; then systemctl --user start opentabletdriver; fi' EXIT
+for pair in 'RelativeHover:relative-hover-fix' 'ProPen3D:propen3d' 'DynamicScroll:dynamic-scroll'; do
+  project=${pair%%:*}; folder=${pair#*:}
+  mkdir -p "$config/Plugins/$folder"
+  install -m644 "$root/$project/bin/Release/net10.0/$project.dll" "$config/Plugins/$folder/$project.dll"
+done
+if $propen; then
+  mkdir -p "$config/Configurations"
+  install -m644 "$root/examples/PTH-660-ProPen3D.json" "$config/Configurations/PTH-660.json"
+fi
+for name in Desktop Gaming Pen Mouse; do
+  if [[ ! -f "$config/Presets/$name.json" ]]; then cp "$root/examples/$name.json" "$config/Presets/$name.json"; fi
+done
+if [[ ! -f "$config/Presets/Dynamic Scroll.json" ]]; then cp "$root/examples/Dynamic-Scroll.json" "$config/Presets/Dynamic Scroll.json"; fi
+mkdir -p "$config/QuickPresets"
+if [[ ! -f "$config/QuickPresets/names.json" ]]; then cp "$root/examples/preset-names.json" "$config/QuickPresets/names.json"; fi
+stage=$(mktemp -d "$data/wacom-ui.stage.XXXXXX")
+cp -a "$root/out/ui/." "$stage/"
+if [[ -d "$data/wacom-ui" ]]; then mv "$data/wacom-ui" "$backup/ui"; fi
+mv "$stage" "$data/wacom-ui"
+cat > "$HOME/.local/bin/wacom" <<'LAUNCHER'
+#!/usr/bin/env bash
+set -euo pipefail
+logdir="${XDG_CACHE_HOME:-$HOME/.cache}/opentabletdriver"
+mkdir -p "$logdir"
+nohup "${XDG_DATA_HOME:-$HOME/.local/share}/wacom-ui/OpenTabletDriver.UX.Gtk" "$@" >"$logdir/gui.log" 2>&1 </dev/null &
+LAUNCHER
+chmod +x "$HOME/.local/bin/wacom"
+cat > "$data/applications/opentabletdriver.desktop" <<DESKTOP
+[Desktop Entry]
+Version=1.5
+Name=OpenTabletDriver
+Comment=Wacom settings with presets, pen button testing, and dynamic scrolling
+Exec="$HOME/.local/bin/wacom"
+Icon=/usr/share/pixmaps/otd.png
+Terminal=false
+Type=Application
+Categories=Settings;
+StartupNotify=false
+StartupWMClass=OpenTabletDriver.UX.Gtk
+DESKTOP
+systemctl --user enable --now opentabletdriver
+trap - EXIT
+printf '\nInstalled. Run wacom. Existing settings and preset slots were preserved.\nBackup: %s\n' "$backup"
