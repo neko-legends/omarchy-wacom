@@ -7,9 +7,9 @@ int checks = 0;
 void Check(bool condition, string message) { if (!condition) throw new Exception(message); checks++; }
 var mouse = new Mouse();
 var defaults = new DynamicScrollBinding();
-Check(defaults.Amount == 50 && defaults.Interval == 100 && defaults.DeadZone == 10 && defaults.Distance == 100 && defaults.MaximumSpeed == 5, "User-tuned defaults");
-Check(defaults.CalculateRate(new Vector2(60, -60)) == new Vector2(250, 250), "User-tuned proportional rate");
-Check(defaults.CalculateRate(new Vector2(510, -510)) == new Vector2(2500, 2500), "User-tuned maximum rate");
+Check(defaults.Amount == 50 && defaults.Interval == 100 && defaults.DeadZone == 10 && defaults.Distance == 50 && defaults.MaximumSpeed == 5, "User-tuned defaults");
+Check(defaults.CalculateRate(new Vector2(35, -35)) == new Vector2(250, 250), "User-tuned proportional rate");
+Check(defaults.CalculateRate(new Vector2(260, -260)) == new Vector2(2500, 2500), "User-tuned maximum rate");
 var binding = new DynamicScrollBinding { Pointer = mouse, Amount = 50, Interval = 100, DeadZone = 15, Distance = 100, MaximumSpeed = 8 };
 Check(binding.CalculateRate(new Vector2(10, -10)) == Vector2.Zero, "Dead zone");
 Check(binding.CalculateRate(new Vector2(115, -115)) == new Vector2(500,500), "Base amount/interval, NE");

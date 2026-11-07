@@ -30,7 +30,7 @@ public sealed class DynamicScrollBinding : IStateBinding
     [Property("Base Amount"), DefaultPropertyValue(50)] public int Amount { get; set; } = 50;
     [Property("Base Interval (ms)"), DefaultPropertyValue(100)] public int Interval { get; set; } = 100;
     [Property("Dead Zone (cursor pixels)"), DefaultPropertyValue(10)] public float DeadZone { get; set; } = 10;
-    [Property("Base Speed Distance (cursor pixels)"), DefaultPropertyValue(100)] public float Distance { get; set; } = 100;
+    [Property("Base Speed Distance (cursor pixels)"), DefaultPropertyValue(50)] public float Distance { get; set; } = 50;
     [Property("Maximum Speed Multiplier"), DefaultPropertyValue(5)] public float MaximumSpeed { get; set; } = 5;
     [BooleanProperty("Invert Horizontal", "")] public bool InvertX { get; set; }
     [BooleanProperty("Invert Vertical", "")] public bool InvertY { get; set; }

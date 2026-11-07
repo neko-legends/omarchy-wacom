@@ -125,8 +125,12 @@
                 "Value": 100
               },
               {
-                "Property": "Distance",
-                "Value": 100.0
+                "Property": "DeadZone",
+                "Value": 10.0
+              },
+              {
+                "Property": "MaximumSpeed",
+                "Value": 5.0
               },
               {
                 "Property": "InvertX",
@@ -137,12 +141,8 @@
                 "Value": false
               },
               {
-                "Property": "MaximumSpeed",
-                "Value": 5.0
-              },
-              {
-                "Property": "DeadZone",
-                "Value": 10.0
+                "Property": "Distance",
+                "Value": 50.0
               }
             ],
             "Enable": true

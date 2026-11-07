@@ -55,7 +55,7 @@ In **Dynamic Scroll**, hold **Pen Binding 2**:
 3. Return to neutral to stop, or release to resume normal cursor motion.
 
 The refined defaults are base amount **50**, base interval **100 ms**,
-dead zone **10 cursor pixels**, base-speed distance **100 cursor pixels past
+dead zone **10 cursor pixels**, base-speed distance **50 cursor pixels past
 neutral's dead zone**, and maximum speed **5x**. Both direction inversions are
 off. Edit the binding to adjust these. Desktop's fixed-scroll bindings remain
 at **50 / 100 ms**, and mouse sensitivity is **15 px/mm** on both axes.
